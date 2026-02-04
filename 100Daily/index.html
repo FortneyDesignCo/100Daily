@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>100Daily</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="topbar">
+        <div class="brand">
+          <div class="brand__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" role="img" focusable="false">
+              <circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2" />
+              <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2" />
+              <circle cx="12" cy="12" r="1.6" fill="currentColor" />
+            </svg>
+          </div>
+          <div class="brand__text">
+            <p><span class="brand__num">100</span><span class="brand__name">Daily</span></p>
+          </div>
+        </div>
+        <div class="streak" id="streakBadge">
+          <span class="streak__icon">&#128293;</span>
+          <span><strong id="streakValue">0</strong> Day Streak</span>
+        </div>
+      </header>
+
+      <main class="content">
+        <section class="date-nav">
+          <button id="returnToday" class="chip">Return to Today</button>
+          <h2 id="dateLabel">Today</h2>
+        </section>
+
+        <section class="progress">
+          <div class="progress__ring">
+            <svg viewBox="0 0 200 200" aria-hidden="true">
+              <circle class="ring-bg" cx="100" cy="100" r="80" />
+              <circle class="ring-progress" cx="100" cy="100" r="80" />
+            </svg>
+            <div class="progress__text">
+              <span id="progressCount">0</span>
+              <small>/ 100 reps</small>
+            </div>
+          </div>
+          <div class="progress__meta">
+            <p id="progressMessage">100 more to go</p>
+            <p class="muted" id="selectedMeta">Selected day: Today</p>
+          </div>
+        </section>
+
+        <section class="controls">
+          <div class="quick-add">
+            <button class="quick" data-add="10">+10</button>
+            <button class="quick" data-add="25">+25</button>
+            <button class="quick" data-add="30">+30</button>
+          </div>
+
+          <form class="custom" id="customForm">
+            <input id="customInput" type="number" min="1" placeholder="Custom amount" />
+            <button type="submit">Add</button>
+          </form>
+
+          <div class="control-row">
+            <button id="undoButton" class="link">Undo 10</button>
+          </div>
+        </section>
+
+        <section class="calendar">
+          <div class="calendar__header">
+            <div>
+              <p class="eyebrow">Calendar</p>
+              <h3 id="monthLabel">Month 2026</h3>
+            </div>
+            <div class="calendar__nav">
+              <button id="prevMonth" class="icon">&#8592;</button>
+              <button id="nextMonth" class="icon">&#8594;</button>
+            </div>
+          </div>
+          <div class="calendar__grid" id="calendarGrid"></div>
+          <div class="legend">
+            <div><span class="dot empty"></span>Empty</div>
+            <div><span class="dot active"></span>Active</div>
+            <div><span class="dot done"></span>Done</div>
+          </div>
+        </section>
+
+        <section class="summary">
+          <p>Total all time</p>
+          <h4 id="totalCount">0</h4>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
