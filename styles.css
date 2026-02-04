@@ -145,18 +145,26 @@ body {
 .progress {
   background: var(--panel-soft);
   border-radius: var(--radius);
-  padding: 24px;
+  padding: 32px 24px;
   box-shadow: var(--shadow);
   border: 1px solid rgba(148, 163, 184, 0.12);
-  display: grid;
-  gap: 20px;
-  justify-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.progress__title {
+  color: var(--muted);
+  font-weight: 500;
+  font-size: 1.25rem;
+  letter-spacing: 0.02em;
 }
 
 .progress__ring {
   position: relative;
-  width: 220px;
-  height: 220px;
+  width: 260px;
+  height: 260px;
 }
 
 .progress__ring svg {
@@ -167,14 +175,14 @@ body {
 
 .ring-bg {
   fill: none;
-  stroke: rgba(148, 163, 184, 0.2);
-  stroke-width: 14;
+  stroke: rgba(80, 90, 100, 0.4);
+  stroke-width: 12;
 }
 
 .ring-progress {
   fill: none;
   stroke: var(--accent);
-  stroke-width: 14;
+  stroke-width: 12;
   stroke-linecap: round;
   transition: stroke-dashoffset 0.6s ease;
 }
@@ -182,37 +190,47 @@ body {
 .progress__text {
   position: absolute;
   inset: 0;
-  display: grid;
-  place-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
 }
 
 .progress__text span {
-  font-size: 3rem;
-  font-weight: 800;
+  font-size: 4rem;
+  font-weight: 700;
   color: var(--ink);
+  line-height: 1;
 }
 
 .progress__text small {
   color: var(--muted);
-  font-size: 0.75rem;
-  letter-spacing: 0.2em;
+  font-size: 0.9rem;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
+  margin-top: 4px;
 }
 
 .progress__meta {
   text-align: center;
   display: grid;
-  gap: 6px;
+  gap: 8px;
 }
 
 .progress__meta p {
-  font-weight: 600;
+  font-weight: 500;
+  font-size: 1.1rem;
+  color: var(--muted);
 }
 
 .muted {
   color: var(--muted);
   font-size: 0.85rem;
+}
+
+#selectedMeta {
+  display: none;
 }
 
 .controls {
@@ -429,8 +447,12 @@ input:disabled {
 
 @media (max-width: 520px) {
   .progress__ring {
-    width: 200px;
-    height: 200px;
+    width: 220px;
+    height: 220px;
+  }
+
+  .progress__text span {
+    font-size: 3.5rem;
   }
 
   .quick-add {
