@@ -458,7 +458,14 @@ input:disabled {
   }
 
   .quick-add {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .quick {
+    padding: 14px 0;
+    font-size: 1rem;
+    border-radius: 12px;
   }
 
   .control-row {
