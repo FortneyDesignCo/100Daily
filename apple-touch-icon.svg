@@ -1,6 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="180" height="180">
-  <rect width="180" height="180" fill="#22c55e"/>
-  <circle cx="90" cy="90" r="80" fill="none" stroke="#03150a" stroke-width="18"/>
-  <circle cx="90" cy="90" r="40" fill="none" stroke="#03150a" stroke-width="16"/>
-  <circle cx="90" cy="90" r="13" fill="#03150a"/>
+  <defs>
+    <radialGradient id="bg" cx="0.4" cy="0.4" r="0.7">
+      <stop offset="0%" stop-color="#1a5c3a"/>
+      <stop offset="100%" stop-color="#0a2618"/>
+    </radialGradient>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#a7f3d0"/>
+      <stop offset="100%" stop-color="#22c55e"/>
+    </linearGradient>
+  </defs>
+  <rect width="180" height="180" fill="url(#bg)"/>
+  <text x="16" y="120" font-family="'Helvetica Neue',Arial,sans-serif" font-weight="800" font-size="84" fill="white" letter-spacing="-3">10</text>
+  <circle cx="142" cy="95" r="28" fill="none" stroke="url(#g)" stroke-width="5.5"/>
+  <polyline points="126,96 136,106 159,79" fill="none" stroke="url(#g)" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
