@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="180" height="180">
+  <!-- Green background -->
+  <rect width="180" height="180" fill="#22c55e"/>
+  <!-- Bullseye circles in dark color -->
+  <circle cx="90" cy="90" r="60" fill="none" stroke="#03150a" stroke-width="12"/>
+  <circle cx="90" cy="90" r="30" fill="none" stroke="#03150a" stroke-width="12"/>
+  <circle cx="90" cy="90" r="10" fill="#03150a"/>
+</svg>
