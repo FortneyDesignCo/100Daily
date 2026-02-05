@@ -1,16 +1,33 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="180" height="180">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
   <defs>
-    <radialGradient id="bg" cx="0.4" cy="0.4" r="0.7">
+    <!-- Background: dark green with atmospheric/misty effect -->
+    <radialGradient id="bg1" cx="0.35" cy="0.4" r="0.75">
       <stop offset="0%" stop-color="#1a5c3a"/>
-      <stop offset="100%" stop-color="#0a2618"/>
+      <stop offset="45%" stop-color="#0f3d25"/>
+      <stop offset="100%" stop-color="#051710"/>
     </radialGradient>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#a7f3d0"/>
+    <radialGradient id="bg2" cx="0.45" cy="0.35" r="0.55">
+      <stop offset="0%" stop-color="#1e7048" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#051710" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Green gradient for checkmark and circle -->
+    <linearGradient id="checkGrad" x1="0.1" y1="0" x2="0.7" y2="1">
+      <stop offset="0%" stop-color="#b8f0d0"/>
+      <stop offset="45%" stop-color="#4ade80"/>
       <stop offset="100%" stop-color="#22c55e"/>
     </linearGradient>
   </defs>
-  <rect width="180" height="180" fill="url(#bg)"/>
-  <text x="16" y="120" font-family="'Helvetica Neue',Arial,sans-serif" font-weight="800" font-size="84" fill="white" letter-spacing="-3">10</text>
-  <circle cx="142" cy="95" r="28" fill="none" stroke="url(#g)" stroke-width="5.5"/>
-  <polyline points="126,96 136,106 159,79" fill="none" stroke="url(#g)" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Background layers -->
+  <rect width="512" height="512" fill="url(#bg1)"/>
+  <rect width="512" height="512" fill="url(#bg2)"/>
+
+  <!-- "10" text in white, bold -->
+  <text x="58" y="325" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-weight="800" font-size="235" fill="white" letter-spacing="-10">10</text>
+
+  <!-- Checkmark circle (the "0" of 100), overlapping with the 0 -->
+  <circle cx="385" cy="250" r="72" fill="none" stroke="url(#checkGrad)" stroke-width="14"/>
+
+  <!-- Checkmark -->
+  <polyline points="345,255 375,285 435,210" fill="none" stroke="url(#checkGrad)" stroke-width="17" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
