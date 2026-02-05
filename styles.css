@@ -52,17 +52,15 @@ body {
   width: 40px;
   height: 40px;
   border-radius: 12px;
-  background: var(--accent);
-  color: #03150a;
-  font-weight: 800;
+  overflow: hidden;
   display: grid;
   place-items: center;
-  font-size: 0.9rem;
 }
 
-.brand__icon svg {
-  width: 26px;
-  height: 26px;
+.brand__icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .brand p {
