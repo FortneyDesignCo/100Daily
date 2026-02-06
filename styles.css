@@ -272,6 +272,7 @@ body {
   border-radius: 14px;
   padding: 12px 14px;
   color: var(--ink);
+  font-size: 16px;
 }
 
 .custom button {
