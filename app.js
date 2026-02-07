@@ -21,6 +21,9 @@ const ring = document.querySelector(".ring-progress");
 const radius = ring.r.baseVal.value;
 const circumference = 2 * Math.PI * radius;
 ring.style.strokeDasharray = `${circumference} ${circumference}`;
+const ringContainer = document.querySelector(".progress__ring");
+
+let pendingCelebration = false;
 
 const dayNames = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 
@@ -62,11 +65,15 @@ function getCount(dateStr) {
 }
 
 function setCount(dateStr, value) {
+  const previousValue = getCount(dateStr);
   const safe = Math.max(0, Math.floor(value));
   if (safe === 0) {
     delete state.logs[dateStr];
   } else {
     state.logs[dateStr] = safe;
+  }
+  if (safe >= GOAL && previousValue < GOAL && dateStr === state.selectedDate) {
+    pendingCelebration = true;
   }
   saveLogs();
   updateUI();
@@ -182,6 +189,11 @@ function updateUI() {
   ring.style.strokeDashoffset = `${offset}`;
   progressCount.textContent = selectedCount;
 
+  if (pendingCelebration) {
+    pendingCelebration = false;
+    setTimeout(celebrateRingClose, 620);
+  }
+
   if (isFuture) {
     progressMessage.textContent = "Future date";
   } else if (selectedCount >= GOAL) {
@@ -243,5 +255,36 @@ nextMonth.addEventListener("click", () => {
   state.currentMonth = new Date(state.currentMonth.getFullYear(), state.currentMonth.getMonth() + 1, 1);
   renderCalendar();
 });
+
+function celebrateRingClose() {
+  ringContainer.classList.remove("celebrate");
+  void ringContainer.offsetWidth;
+  ringContainer.classList.add("celebrate");
+  spawnParticles(16);
+  ringContainer.addEventListener(
+    "animationend",
+    () => ringContainer.classList.remove("celebrate"),
+    { once: true },
+  );
+}
+
+function spawnParticles(count) {
+  for (let i = 0; i < count; i++) {
+    const particle = document.createElement("div");
+    particle.className = "ring-particle";
+    const angle = (2 * Math.PI * i) / count + (Math.random() - 0.5) * 0.3;
+    const distance = 60 + Math.random() * 50;
+    const tx = Math.cos(angle) * distance;
+    const ty = Math.sin(angle) * distance;
+    particle.style.setProperty("--tx", `${tx}px`);
+    particle.style.setProperty("--ty", `${ty}px`);
+    const size = 4 + Math.random() * 6;
+    particle.style.width = `${size}px`;
+    particle.style.height = `${size}px`;
+    particle.style.animationDelay = `${Math.random() * 0.15}s`;
+    ringContainer.appendChild(particle);
+    particle.addEventListener("animationend", () => particle.remove());
+  }
+}
 
 updateUI();
