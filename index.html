@@ -68,6 +68,47 @@
           </div>
         </section>
 
+        <section class="fasting">
+          <div class="fasting__header">
+            <div>
+              <p class="eyebrow">Fasting</p>
+              <h3 id="fastingStatus">No active fast</h3>
+            </div>
+          </div>
+
+          <div id="fastingIdle" class="fasting__idle">
+            <div class="fasting__start-options">
+              <button id="startFastNow" class="quick fasting__btn">Start Now</button>
+              <button id="startFastRetro" class="quick fasting__btn fasting__btn--retro">Retroactive Start</button>
+            </div>
+            <div id="retroPicker" class="fasting__retro-picker hidden">
+              <label for="retroDateTime" class="fasting__label">When did your fast begin?</label>
+              <input type="datetime-local" id="retroDateTime" class="fasting__datetime" />
+              <div class="fasting__retro-actions">
+                <button id="retroConfirm" class="quick fasting__btn fasting__btn--confirm">Start Fast</button>
+                <button id="retroCancel" class="link">Cancel</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="fastingActive" class="fasting__active hidden">
+            <div class="fasting__timer-ring">
+              <svg viewBox="0 0 200 200" aria-hidden="true">
+                <circle class="ring-bg" cx="100" cy="100" r="80" />
+                <circle class="fast-ring-progress" cx="100" cy="100" r="80" />
+              </svg>
+              <div class="fasting__timer-text">
+                <span id="fastElapsed">0:00:00</span>
+                <small id="fastGoalLabel">/ 16h goal</small>
+              </div>
+            </div>
+            <p class="muted" id="fastStartLabel">Started: --</p>
+            <button id="endFast" class="quick fasting__btn fasting__btn--end">End Fast</button>
+          </div>
+
+          <div id="fastHistory" class="fasting__history"></div>
+        </section>
+
         <section class="calendar">
           <div class="calendar__header">
             <div>
