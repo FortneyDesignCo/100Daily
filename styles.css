@@ -207,6 +207,28 @@ body {
   letter-spacing: 0.15em;
   text-transform: uppercase;
   margin-top: 4px;
+  cursor: pointer;
+  border-bottom: 1px dashed rgba(138, 148, 166, 0.4);
+  padding-bottom: 2px;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.progress__text small:hover {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+}
+
+.goal-input {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  color: var(--ink);
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  text-align: center;
+  width: 80px;
+  padding: 4px 6px;
+  outline: none;
 }
 
 .progress__meta {
