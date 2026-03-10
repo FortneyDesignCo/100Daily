@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__Claude_Preview__preview_start",
+      "Bash(where node)",
+      "Bash(where npm)",
+      "Bash(\"/c/Users/KTFor/AppData/Local/Microsoft/WindowsApps/python\" --version)",
+      "Bash(cmd.exe /c \"where node 2>nul & where npx 2>nul & where python 2>nul & where bun 2>nul\")",
+      "Bash(cmd.exe /c \"where node 2>nul && where npm 2>nul && where npx 2>nul\")",
+      "Bash(echo $PATH)",
+      "Bash(cmd.exe /c \"where winget\")",
+      "Bash(winget install OpenJS.NodeJS.LTS --accept-package-agreements --accept-source-agreements)",
+      "Bash(export PATH=\"/c/Program Files/nodejs:$PATH\")",
+      "Bash(npx -v)"
+    ]
+  }
+}
