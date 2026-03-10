@@ -1,5 +1,17 @@
-const GOAL = 100;
+const DEFAULT_GOAL = 100;
 const storageKey = "pushups-daily-v2";
+const goalKey = "pushups-goal";
+
+function getGoal() {
+  const saved = localStorage.getItem(goalKey);
+  return saved ? Math.max(1, Math.floor(Number(saved))) : DEFAULT_GOAL;
+}
+
+function setGoalValue(value) {
+  const safe = Math.max(1, Math.floor(Number(value)));
+  localStorage.setItem(goalKey, safe);
+  updateUI();
+}
 
 const streakValue = document.getElementById("streakValue");
 const dateLabel = document.getElementById("dateLabel");
@@ -15,6 +27,7 @@ const customForm = document.getElementById("customForm");
 const customInput = document.getElementById("customInput");
 const undoButton = document.getElementById("undoButton");
 const totalCount = document.getElementById("totalCount");
+const goalLabel = document.getElementById("goalLabel");
 const quickButtons = Array.from(document.querySelectorAll(".quick-add .quick"));
 
 const ring = document.querySelector(".ring-progress");
@@ -72,7 +85,7 @@ function setCount(dateStr, value) {
   } else {
     state.logs[dateStr] = safe;
   }
-  if (safe >= GOAL && previousValue < GOAL && dateStr === state.selectedDate) {
+  if (safe >= getGoal() && previousValue < getGoal() && dateStr === state.selectedDate) {
     pendingCelebration = true;
   }
   saveLogs();
@@ -89,7 +102,7 @@ function calculateStreak() {
   const today = new Date();
   const todayStr = getLocalDateString(today);
   const todayLog = state.logs[todayStr];
-  if (todayLog >= GOAL) {
+  if (todayLog >= getGoal()) {
     streak += 1;
   }
 
@@ -98,7 +111,7 @@ function calculateStreak() {
   while (true) {
     const dateStr = getLocalDateString(checkDate);
     const count = state.logs[dateStr] || 0;
-    if (count >= GOAL) {
+    if (count >= getGoal()) {
       streak += 1;
       checkDate.setDate(checkDate.getDate() - 1);
     } else {
@@ -156,7 +169,7 @@ function renderCalendar() {
 
     const count = getCount(dayObj.dateStr);
     let statusClass = "";
-    if (count >= GOAL) statusClass = "done";
+    if (count >= getGoal()) statusClass = "done";
     else if (count > 0) statusClass = "active";
 
     cell.className = `day ${statusClass}`.trim();
@@ -184,7 +197,8 @@ function updateUI() {
   dateLabel.textContent = isToday ? "Today's Progress" : formatDateReadable(state.selectedDate);
   selectedMeta.textContent = `Selected day: ${isToday ? "Today" : formatDateReadable(state.selectedDate)}`;
 
-  const percentage = Math.min((selectedCount / GOAL) * 100, 100);
+  const goal = getGoal();
+  const percentage = Math.min((selectedCount / goal) * 100, 100);
   const offset = circumference - (percentage / 100) * circumference;
   ring.style.strokeDashoffset = `${offset}`;
   progressCount.textContent = selectedCount;
@@ -196,11 +210,13 @@ function updateUI() {
 
   if (isFuture) {
     progressMessage.textContent = "Future date";
-  } else if (selectedCount >= GOAL) {
+  } else if (selectedCount >= goal) {
     progressMessage.textContent = "Goal complete!";
   } else {
-    progressMessage.textContent = `${GOAL - selectedCount} more to go`;
+    progressMessage.textContent = `${goal - selectedCount} more to go`;
   }
+
+  goalLabel.textContent = `/ ${goal} reps`;
 
   const streak = calculateStreak();
   streakValue.textContent = streak;
@@ -286,6 +302,37 @@ function spawnParticles(count) {
     particle.addEventListener("animationend", () => particle.remove());
   }
 }
+
+// ── Goal editing ────────────────────────────────────────────────
+goalLabel.addEventListener("click", () => {
+  if (goalLabel.querySelector("input")) return;
+  const current = getGoal();
+  const input = document.createElement("input");
+  input.type = "number";
+  input.min = "1";
+  input.value = current;
+  input.className = "goal-input";
+
+  goalLabel.textContent = "";
+  goalLabel.appendChild(input);
+  input.focus();
+  input.select();
+
+  function commit() {
+    const val = Number(input.value);
+    if (val >= 1) setGoalValue(val);
+    else updateUI();
+  }
+
+  input.addEventListener("blur", commit, { once: true });
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") input.blur();
+    if (e.key === "Escape") {
+      input.removeEventListener("blur", commit);
+      updateUI();
+    }
+  });
+});
 
 // ── Init ─────────────────────────────────────────────────────────
 updateUI();
