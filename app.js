@@ -103,9 +103,12 @@ function setCount(dateStr, value) {
     delete state.dayGoals[dateStr];
   } else {
     state.logs[dateStr] = safe;
-    state.dayGoals[dateStr] = getGoal();
+    if (!state.dayGoals[dateStr]) {
+      state.dayGoals[dateStr] = getGoal();
+    }
   }
-  if (safe >= getGoal() && previousValue < getGoal() && dateStr === state.selectedDate) {
+  const dayGoal = getGoalForDate(dateStr);
+  if (safe >= dayGoal && previousValue < dayGoal && dateStr === state.selectedDate) {
     pendingCelebration = true;
   }
   saveLogs();
@@ -219,7 +222,7 @@ function updateUI() {
   dateLabel.textContent = isToday ? "Today's Progress" : formatDateReadable(state.selectedDate);
   selectedMeta.textContent = `Selected day: ${isToday ? "Today" : formatDateReadable(state.selectedDate)}`;
 
-  const goal = getGoal();
+  const goal = getGoalForDate(state.selectedDate);
   const percentage = Math.min((selectedCount / goal) * 100, 100);
   const offset = circumference - (percentage / 100) * circumference;
   ring.style.strokeDashoffset = `${offset}`;
