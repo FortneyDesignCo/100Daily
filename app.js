@@ -25,7 +25,27 @@ function getGoalForDate(dateStr) {
 }
 
 function setGoalValue(value) {
+  const oldGoal = getGoal();
   const safe = Math.max(1, Math.floor(Number(value)));
+
+  if (safe !== oldGoal) {
+    const todayStr = getLocalDateString();
+
+    // Lock in the old goal for past days that don't have a saved goal yet
+    Object.keys(state.logs).forEach((dateStr) => {
+      if (dateStr < todayStr && !state.dayGoals[dateStr]) {
+        state.dayGoals[dateStr] = oldGoal;
+      }
+    });
+
+    // Update today's goal to the new value so it applies immediately
+    if (state.dayGoals[todayStr]) {
+      state.dayGoals[todayStr] = safe;
+    }
+
+    saveDayGoals();
+  }
+
   localStorage.setItem(goalKey, safe);
   updateUI();
 }
