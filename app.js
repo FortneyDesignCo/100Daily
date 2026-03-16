@@ -1,10 +1,27 @@
 const DEFAULT_GOAL = 100;
 const storageKey = "pushups-daily-v2";
 const goalKey = "pushups-goal";
+const dayGoalsKey = "pushups-day-goals";
 
 function getGoal() {
   const saved = localStorage.getItem(goalKey);
   return saved ? Math.max(1, Math.floor(Number(saved))) : DEFAULT_GOAL;
+}
+
+function loadDayGoals() {
+  try {
+    return JSON.parse(localStorage.getItem(dayGoalsKey)) || {};
+  } catch (error) {
+    return {};
+  }
+}
+
+function saveDayGoals() {
+  localStorage.setItem(dayGoalsKey, JSON.stringify(state.dayGoals));
+}
+
+function getGoalForDate(dateStr) {
+  return state.dayGoals[dateStr] || getGoal();
 }
 
 function setGoalValue(value) {
@@ -42,6 +59,7 @@ const dayNames = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 
 const state = {
   logs: loadLogs(),
+  dayGoals: loadDayGoals(),
   selectedDate: getLocalDateString(),
   currentMonth: new Date(),
 };
@@ -82,13 +100,16 @@ function setCount(dateStr, value) {
   const safe = Math.max(0, Math.floor(value));
   if (safe === 0) {
     delete state.logs[dateStr];
+    delete state.dayGoals[dateStr];
   } else {
     state.logs[dateStr] = safe;
+    state.dayGoals[dateStr] = getGoal();
   }
   if (safe >= getGoal() && previousValue < getGoal() && dateStr === state.selectedDate) {
     pendingCelebration = true;
   }
   saveLogs();
+  saveDayGoals();
   updateUI();
 }
 
@@ -102,7 +123,7 @@ function calculateStreak() {
   const today = new Date();
   const todayStr = getLocalDateString(today);
   const todayLog = state.logs[todayStr];
-  if (todayLog >= getGoal()) {
+  if (todayLog >= getGoalForDate(todayStr)) {
     streak += 1;
   }
 
@@ -111,7 +132,7 @@ function calculateStreak() {
   while (true) {
     const dateStr = getLocalDateString(checkDate);
     const count = state.logs[dateStr] || 0;
-    if (count >= getGoal()) {
+    if (count >= getGoalForDate(dateStr)) {
       streak += 1;
       checkDate.setDate(checkDate.getDate() - 1);
     } else {
@@ -168,8 +189,9 @@ function renderCalendar() {
     }
 
     const count = getCount(dayObj.dateStr);
+    const dayGoal = getGoalForDate(dayObj.dateStr);
     let statusClass = "";
-    if (count >= getGoal()) statusClass = "done";
+    if (count >= dayGoal) statusClass = "done";
     else if (count > 0) statusClass = "active";
 
     cell.className = `day ${statusClass}`.trim();
