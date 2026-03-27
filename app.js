@@ -64,6 +64,7 @@ const customForm = document.getElementById("customForm");
 const customInput = document.getElementById("customInput");
 const undoButton = document.getElementById("undoButton");
 const totalCount = document.getElementById("totalCount");
+const ytdCount = document.getElementById("ytdCount");
 const goalLabel = document.getElementById("goalLabel");
 const quickButtons = Array.from(document.querySelectorAll(".quick-add .quick"));
 
@@ -265,6 +266,12 @@ function updateUI() {
 
   const streak = calculateStreak();
   streakValue.textContent = streak;
+
+  const currentYear = new Date().getFullYear().toString();
+  const ytd = Object.entries(state.logs)
+    .filter(([date]) => date.startsWith(currentYear))
+    .reduce((acc, [, val]) => acc + val, 0);
+  ytdCount.textContent = ytd.toLocaleString();
 
   const total = Object.values(state.logs).reduce((acc, val) => acc + val, 0);
   totalCount.textContent = total.toLocaleString();
