@@ -179,9 +179,57 @@ body {
 .ring-progress {
   fill: none;
   stroke: var(--accent);
-  stroke-width: 12;
   stroke-linecap: round;
   transition: stroke-dashoffset 0.6s ease;
+}
+
+.ring-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.ring-tabs.hidden {
+  display: none;
+}
+
+.ring-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(30, 41, 59, 0.5);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.ring-tab__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--ring-color, var(--accent));
+}
+
+.ring-tab__count {
+  font-weight: 500;
+  opacity: 0.75;
+}
+
+.ring-tab.selected {
+  color: var(--ink);
+  border-color: var(--ring-color, var(--accent));
+  background: rgba(30, 41, 59, 0.9);
+}
+
+.ring-tab.complete .ring-tab__count {
+  color: var(--ring-color, var(--accent));
+  opacity: 1;
 }
 
 .progress__text {
@@ -216,6 +264,34 @@ body {
 .progress__text small:hover {
   color: var(--ink);
   border-bottom-color: var(--ink);
+}
+
+/* The centre has to shrink to fit inside the innermost ring. */
+.progress__ring[data-rings="2"] .progress__text {
+  padding: 0 22%;
+}
+
+.progress__ring[data-rings="2"] .progress__text span {
+  font-size: 3.1rem;
+}
+
+.progress__ring[data-rings="2"] .progress__text small {
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+}
+
+.progress__ring[data-rings="3"] .progress__text {
+  padding: 0 32%;
+}
+
+.progress__ring[data-rings="3"] .progress__text span {
+  font-size: 2.2rem;
+}
+
+.progress__ring[data-rings="3"] .progress__text small {
+  font-size: 0.6rem;
+  letter-spacing: 0.03em;
+  line-height: 1.2;
 }
 
 .goal-input {
@@ -330,6 +406,119 @@ body {
 
 .link .minus {
   font-size: 1rem;
+}
+
+.rings {
+  background: var(--panel);
+  border-radius: var(--radius);
+  padding: 20px;
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  display: grid;
+  gap: 14px;
+}
+
+.rings__header {
+  display: grid;
+  gap: 4px;
+}
+
+.rings__list {
+  display: grid;
+  gap: 10px;
+}
+
+.ring-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  transition: border 0.2s ease, opacity 0.2s ease;
+}
+
+.ring-row.is-on {
+  border-color: var(--ring-color, var(--accent));
+}
+
+.ring-row:not(.is-on) {
+  opacity: 0.55;
+}
+
+.ring-toggle {
+  position: relative;
+  display: inline-flex;
+  cursor: pointer;
+}
+
+.ring-toggle input {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  opacity: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.ring-toggle__track {
+  width: 42px;
+  height: 24px;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.25);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  position: relative;
+  transition: background 0.2s ease;
+}
+
+.ring-toggle__track::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--ink);
+  transition: transform 0.2s ease;
+}
+
+.ring-toggle input:checked + .ring-toggle__track {
+  background: var(--ring-color, var(--accent));
+}
+
+.ring-toggle input:checked + .ring-toggle__track::after {
+  transform: translateX(18px);
+}
+
+.ring-toggle input:disabled {
+  cursor: not-allowed;
+}
+
+.ring-name,
+.ring-goal {
+  background: transparent;
+  border: none;
+  border-bottom: 1px dashed rgba(148, 163, 184, 0.3);
+  color: var(--ink);
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 4px 2px;
+  min-width: 0;
+  outline: none;
+}
+
+.ring-goal {
+  width: 84px;
+  text-align: right;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.ring-name:focus,
+.ring-goal:focus {
+  border-bottom-color: var(--ring-color, var(--accent));
 }
 
 .calendar {
@@ -470,8 +659,8 @@ input:disabled {
 /* Ring close celebration */
 @keyframes ring-celebrate-glow {
   0% { filter: drop-shadow(0 0 0 transparent); }
-  30% { filter: drop-shadow(0 0 24px rgba(34, 197, 94, 0.8)); }
-  60% { filter: drop-shadow(0 0 16px rgba(34, 197, 94, 0.5)); }
+  30% { filter: drop-shadow(0 0 24px var(--ring-color, var(--accent))); }
+  60% { filter: drop-shadow(0 0 16px var(--ring-color, var(--accent))); }
   100% { filter: drop-shadow(0 0 0 transparent); }
 }
 
@@ -487,12 +676,6 @@ input:disabled {
   0% { transform: scale(1); }
   40% { transform: scale(1.2); }
   100% { transform: scale(1); }
-}
-
-@keyframes ring-stroke-flash {
-  0% { stroke: var(--accent); }
-  35% { stroke: #86efac; }
-  100% { stroke: var(--accent); }
 }
 
 @keyframes particle-fly {
@@ -512,10 +695,6 @@ input:disabled {
 
 .progress__ring.celebrate svg {
   animation: ring-celebrate-glow 1.2s ease-out;
-}
-
-.progress__ring.celebrate .ring-progress {
-  animation: ring-stroke-flash 0.8s ease-out;
 }
 
 .progress__ring.celebrate .progress__text span {
@@ -541,6 +720,23 @@ input:disabled {
 
   .progress__text span {
     font-size: 3.5rem;
+  }
+
+  .progress__ring[data-rings="2"] .progress__text span {
+    font-size: 2.7rem;
+  }
+
+  .progress__ring[data-rings="3"] .progress__text span {
+    font-size: 1.9rem;
+  }
+
+  .ring-row {
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .ring-goal {
+    width: 70px;
   }
 
   .quick-add {
