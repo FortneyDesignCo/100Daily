@@ -36,15 +36,13 @@
         <section class="progress">
           <h3 class="progress__title">Today's Progress</h3>
           <div class="progress__ring">
-            <svg viewBox="0 0 200 200" aria-hidden="true">
-              <circle class="ring-bg" cx="100" cy="100" r="80" />
-              <circle class="ring-progress" cx="100" cy="100" r="80" />
-            </svg>
+            <svg id="ringSvg" viewBox="0 0 200 200" aria-hidden="true"></svg>
             <div class="progress__text">
               <span id="progressCount">0</span>
               <small id="goalLabel">/ 100 reps</small>
             </div>
           </div>
+          <div class="ring-tabs" id="ringTabs"></div>
           <div class="progress__meta">
             <p id="progressMessage">100 more to go</p>
             <p class="muted" id="selectedMeta">Selected day: Today</p>
@@ -68,6 +66,14 @@
           </div>
         </section>
 
+        <section class="rings">
+          <div class="rings__header">
+            <p class="eyebrow">Goal Rings</p>
+            <p class="muted">Toggle up to 3 &mdash; a day counts as done when every ring you have on is closed.</p>
+          </div>
+          <div class="rings__list" id="ringList"></div>
+        </section>
+
         <section class="calendar">
           <div class="calendar__header">
             <div>
@@ -88,12 +94,12 @@
         </section>
 
         <section class="summary">
-          <p>Year to date</p>
+          <p id="ytdLabel">Year to date</p>
           <h4 id="ytdCount">0</h4>
         </section>
 
         <section class="summary">
-          <p>Total all time</p>
+          <p id="totalLabel">Total all time</p>
           <h4 id="totalCount">0</h4>
         </section>
       </main>
