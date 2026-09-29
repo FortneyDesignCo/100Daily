@@ -11,7 +11,7 @@ const ringsKey = "pushups-rings";
 const dayRingsKey = "pushups-day-rings";
 
 const RING_DEFS = [
-  { id: "r1", name: "Pushups", color: "#22c55e" },
+  { id: "r1", name: "Pushups", color: "#FF9E2C" },
   { id: "r2", name: "Squats", color: "#38bdf8" },
   { id: "r3", name: "Situps", color: "#f472b6" },
 ];
