@@ -11,9 +11,9 @@ const ringsKey = "pushups-rings";
 const dayRingsKey = "pushups-day-rings";
 
 const RING_DEFS = [
-  { id: "r1", name: "Pushups", color: "#FF9E2C" },
-  { id: "r2", name: "Squats", color: "#38bdf8" },
-  { id: "r3", name: "Situps", color: "#f472b6" },
+  { id: "r1", name: "Pushups", color: "#ef4444" },
+  { id: "r2", name: "Squats", color: "#f97316" },
+  { id: "r3", name: "Situps", color: "#facc15" },
 ];
 
 const RING_GEOMETRY = [80, 62, 44];
