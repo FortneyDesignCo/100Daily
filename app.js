@@ -713,6 +713,28 @@ goalLabel.addEventListener("click", () => {
   });
 });
 
+// ── Data export ──────────────────────────────────────────────────
+const exportButton = document.getElementById("exportButton");
+if (exportButton) {
+  exportButton.addEventListener("click", async () => {
+    const data =
+      localStorage.getItem(logsKey) ||
+      localStorage.getItem(legacyLogsKey) ||
+      "{}";
+    const original = exportButton.textContent;
+    try {
+      await navigator.clipboard.writeText(data);
+      exportButton.textContent = "Copied!";
+    } catch (error) {
+      window.prompt("Copy your data:", data);
+      return;
+    }
+    setTimeout(() => {
+      exportButton.textContent = original;
+    }, 1500);
+  });
+}
+
 // ── Init ─────────────────────────────────────────────────────────
 saveRings();
 saveLogs();
